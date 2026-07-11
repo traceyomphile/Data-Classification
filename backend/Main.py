@@ -27,8 +27,6 @@ from sklearn.metrics import (
     accuracy_score
 )
 
-import matplotlib.pyplot as plt
-
 DatasetName = Literal['iris', 'digits', 'wine', 'breast_cancer']
 
 DATASET_LOADERS = {

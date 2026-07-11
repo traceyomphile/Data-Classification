@@ -1,4 +1,5 @@
-import { Fragment, FormEvent, useState } from "react";
+import { Fragment, useState } from "react";
+import type { FormEvent } from "react";
 import {
   CartesianGrid,
   Legend,

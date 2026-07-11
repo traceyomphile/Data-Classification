@@ -19,7 +19,7 @@ install-frontend:
 
 # Run backend only, http://localhost:8000
 backend:
-	$(VENV)/bin/uvicorn main:app --reload --port 8000 --app-dir $(BACKEND_DIR)
+	$(VENV)/bin/uvicorn Main:app --reload --port 8000 --app-dir $(BACKEND_DIR)
 
 # Run frontend only, http://localhost:5173
 frontend:
@@ -28,7 +28,7 @@ frontend:
 # Run both at once. Ctrl+C stops both.
 dev:
 	@trap 'kill 0' EXIT INT TERM; \
-	$(VENV)/bin/uvicorn main:app --reload --port 8000 --app-dir $(BACKEND_DIR) & \
+	$(VENV)/bin/uvicorn Main:app --reload --port 8000 --app-dir $(BACKEND_DIR) & \
 	cd $(FRONTEND_DIR) && npm run dev & \
 	wait
 
