@@ -65,12 +65,19 @@ export default function DatasetSelectPanel({ dataset, onSelect, connectionError 
         {cards.map((d) => {
           const active = dataset === d.name
           return (
-            <button
+            <motion.button
               key={d.name}
               onClick={() => onSelect(d.name)}
               disabled={!!loadErr}
-              className={`text-left rounded-xl border px-5 py-4 transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
-                active ? 'border-cyan bg-cyan/[0.07]' : 'border-line bg-panel hover:border-fog'
+              whileHover={loadErr ? undefined : {
+                y: -7,
+                scale: 1.025,
+                boxShadow: '0 18px 38px rgba(0, 0, 0, 0.38)',
+              }}
+              whileTap={loadErr ? undefined : { scale: 0.985 }}
+              transition={{ type: 'spring', stiffness: 360, damping: 22 }}
+              className={`text-left rounded-xl border px-5 py-4 disabled:opacity-40 disabled:cursor-not-allowed ${
+                active ? 'border-cyan bg-cyan/[0.07]' : 'border-line bg-panel hover:border-cyan'
               }`}
             >
               <div className="flex items-center justify-between">
@@ -85,7 +92,7 @@ export default function DatasetSelectPanel({ dataset, onSelect, connectionError 
                   <span>{d.classes.length} classes</span>
                 </div>
               )}
-            </button>
+            </motion.button>
           )
         })}
       </div>

@@ -18,26 +18,21 @@ export default function KSearchViz({ kResults, optimal, onContinue, onBack }: KS
   const [visibleCount, setVisibleCount] = useState(0)
   useEffect(() => {
     if (!kResults?.length) return
-
+    // reset visible count on next tick to avoid synchronous setState within effect
+    const resetTimeout = window.setTimeout(() => setVisibleCount(0), 0)
     const stepMs = Math.max(18, Math.min(70, 1400 / kResults.length))
-    let intervalId: number | undefined
-
-    const timeoutId = window.setTimeout(() => {
-      setVisibleCount(0)
-      intervalId = window.setInterval(() => {
-        setVisibleCount((c) => {
-          if (c >= kResults.length) {
-            if (intervalId !== undefined) clearInterval(intervalId)
-            return c
-          }
-          return c + 1
-        })
-      }, stepMs)
-    }, 0)
-
+    const id = setInterval(() => {
+      setVisibleCount((c) => {
+        if (c >= kResults.length) {
+          clearInterval(id)
+          return c
+        }
+        return c + 1
+      })
+    }, stepMs)
     return () => {
-      clearTimeout(timeoutId)
-      if (intervalId !== undefined) clearInterval(intervalId)
+      clearInterval(id)
+      clearTimeout(resetTimeout)
     }
   }, [kResults])
 

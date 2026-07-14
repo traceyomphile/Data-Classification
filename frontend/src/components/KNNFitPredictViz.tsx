@@ -44,7 +44,10 @@ function seeded(i: number): number {
 }
 
 export default function KnnFitPredictViz({ datasetInfo, optimal, testAccuracy, onContinue, onBack }: KnnFitPredictVizProps) {
-  const classes = datasetInfo.classes?.length ? datasetInfo.classes : ['A', 'B', 'C']
+  const classes = useMemo(
+    () => (datasetInfo.classes?.length ? datasetInfo.classes : ['A', 'B', 'C']),
+    [datasetInfo.classes],
+  )
   const k = optimal.k || 5
   const shownK = Math.min(k, 9)
 
